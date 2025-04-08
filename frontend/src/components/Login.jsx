@@ -19,7 +19,7 @@ const Login = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/check-user-details', { userID });
+            const response = await axios.post('https://digital-canteen-wink.onrender.com', { userID });
 
             if (response.data.hasPassword) {
                 setHasPassword(true);
