@@ -101,7 +101,7 @@ app.get("/user-details", async (req, res) => {
 });
 
 // ✅ API to check if user exists
-app.post('/api/check-user-details', async (req, res) => {
+app.post('/check-user-details', async (req, res) => {
     console.log("Incoming Request Body:", req.body); // Debugging
 
     const { userID } = req.body;
@@ -130,7 +130,7 @@ app.post('/api/check-user-details', async (req, res) => {
 });
 
 // ✅ Login API
-app.post("/api/login-user-details", async (req, res) => {
+app.post("/login-user-details", async (req, res) => {
     try {
         const { userID, password } = req.body;
 
@@ -160,7 +160,7 @@ app.post("/api/login-user-details", async (req, res) => {
 
 
 // ✅ Set Password API
-app.post("/api/set-user-password", async (req, res) => {
+app.post("/set-user-password", async (req, res) => {
     const { userID, newPassword, confirmPassword } = req.body;
 
     if (!userID || !newPassword || !confirmPassword) {
@@ -231,7 +231,7 @@ app.get("/user-details/:userID", async (req, res) => {
 });
 
 // ✅ API to Register New User
-app.post("/api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
     const { userID, username, password } = req.body;
 
     if (!userID || !username || !password) {
@@ -258,7 +258,7 @@ app.post("/api/register", async (req, res) => {
 
 
 
-app.get("/api/shops", async (req, res) => {
+app.get("/shops", async (req, res) => {
     try {
         const shops = await ShopDetails.find({}, "shopName shopOwnerName");
         res.status(200).json(shops); // ✅ Ensure response is JSON
@@ -273,7 +273,7 @@ app.get("/api/shops", async (req, res) => {
 
 
 
-app.post("/api/add-shop", async (req, res) => {
+app.post("/add-shop", async (req, res) => {
     try {
         const { shopName, shopOwnerName } = req.body;
 
@@ -316,7 +316,7 @@ app.post("/api/add-shop", async (req, res) => {
 
 
 // API to validate shop password
-app.post("/api/validate-shop", async (req, res) => {
+app.post("/validate-shop", async (req, res) => {
     console.log("🔹 API /validate-shop called");
 
     // ✅ Debug: Log DB status
@@ -350,7 +350,7 @@ app.post("/api/validate-shop", async (req, res) => {
 
 
 
-app.get("/api/check-shop", async (req, res) => {
+app.get("/check-shop", async (req, res) => {
     try {
         const { shopName } = req.query; // Getting shopName from query params
         const shop = await ShopDetails.findOne({ shopName });
@@ -372,7 +372,7 @@ app.get("/api/check-shop", async (req, res) => {
 
 
 
-app.post("/api/set-password", async (req, res) => {
+app.post("/set-password", async (req, res) => {
     try {
         const { shopName, password } = req.body;
 
@@ -401,7 +401,7 @@ app.post("/api/set-password", async (req, res) => {
 
 
 
-app.get("/api/get-shop", async (req, res) => {
+app.get("/get-shop", async (req, res) => {
     try {
         const { shopName } = req.query;
         const shop = await ShopDetails.findOne({ shopName });
@@ -425,7 +425,7 @@ app.get("/api/get-shop", async (req, res) => {
 
 
 
-app.get("/api/shop-details", async (req, res) => {
+app.get("/shop-details", async (req, res) => {
     const { shopName } = req.query;
     const products = await db.collection(shopName).find().toArray();
 
@@ -435,7 +435,7 @@ app.get("/api/shop-details", async (req, res) => {
 
 
 
-app.post("/api/add-product", async (req, res) => {
+app.post("/add-product", async (req, res) => {
     const { shopName, productName, quantity, price } = req.body;
 
     if (!shopName || !productName || !quantity || !price) {
@@ -459,7 +459,7 @@ app.post("/api/add-product", async (req, res) => {
 
 
 
-app.get("/api/products/:shopName", async (req, res) => {
+app.get("/products/:shopName", async (req, res) => {
     try {
         const { shopName } = req.params;
 
@@ -474,7 +474,7 @@ app.get("/api/products/:shopName", async (req, res) => {
     }
 });
 
-app.get("/api/products/:shop", async (req, res) => {
+app.get("/products/:shop", async (req, res) => {
     try {
         const products = await ShopProduct.find({ shopName: req.params.shop });
         res.json(products);
@@ -486,7 +486,7 @@ app.get("/api/products/:shop", async (req, res) => {
 
 
 
-app.post("/api/buy", async (req, res) => {
+app.post("/buy", async (req, res) => {
     try {
         const { username, shopName, cart } = req.body;
 
@@ -575,7 +575,7 @@ app.post("/api/buy", async (req, res) => {
 
 
 // API to place an order (Saves to OrderDetails)
-app.post("/api/orders", async (req, res) => {
+app.post("/orders", async (req, res) => {
     try {
         const { shopName, productName, username } = req.body;
         const orderId = Math.floor(1000 + Math.random() * 9000); // Generate unique 4-digit ID
@@ -591,7 +591,7 @@ app.post("/api/orders", async (req, res) => {
 });
 
 // API to fetch orders for a shop (From OrderDetails)
-app.get("/api/orders/:shopName", async (req, res) => {
+app.get("/orders/:shopName", async (req, res) => {
     try {
         const orders = await OrderDetails.find({
             shopName: req.params.shopName,
@@ -608,7 +608,7 @@ app.get("/api/orders/:shopName", async (req, res) => {
 
 
 
-app.put("/api/orders/deliver/:orderId", async (req, res) => {
+app.put("/orders/deliver/:orderId", async (req, res) => {
     try {
         const updatedOrder = await OrderDetails.findByIdAndUpdate(
             req.params.orderId,
@@ -652,7 +652,7 @@ app.put("/api/orders/deliver/:orderId", async (req, res) => {
 
 
 
-app.get('/api/report', async (req, res) => {
+app.get('/report', async (req, res) => {
     const { userID, month, year } = req.query;
 
     if (!userID || !month || !year) {
@@ -676,7 +676,7 @@ app.get('/api/report', async (req, res) => {
 
 
 
-app.get("/api/orders/report", async (req, res) => {
+app.get("/orders/report", async (req, res) => {
     const { shopName, month, year } = req.query;
 
     try {
