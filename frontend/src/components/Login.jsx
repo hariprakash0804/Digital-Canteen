@@ -19,7 +19,7 @@ const Login = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('https://digital-canteen-wink.onrender.com', { userID });
+            const response = await axios.post('https://digital-canteen-wink.onrender.com/check-user', { userID });
 
             if (response.data.hasPassword) {
                 setHasPassword(true);
@@ -37,7 +37,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:5000/api/login-user-details", {
+            const response = await fetch("http://digital-canteen-wink.onrender.com/login-user-details", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userID, password }),
@@ -77,7 +77,7 @@ const Login = () => {
         setMessage('');
 
         try {
-            await axios.post('http://localhost:5000/api/set-user-password', {
+            await axios.post('http://digital-canteen-wink.onrender.com/set-user-password', {
                 userID,
                 newPassword,
                 confirmPassword
