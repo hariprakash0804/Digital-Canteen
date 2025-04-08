@@ -8,12 +8,11 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.use(
-    cors({
-        origin: ["http://localhost:5173", "http://localhost:3000"],
-        credentials: true,
-    })
-);
+app.use(cors({
+  origin: 'https://canten.netlify.app', // ✅ replace with your Netlify URL
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
